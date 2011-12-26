@@ -1,4 +1,25 @@
-﻿
+﻿//=======================================================================
+//
+// <copyright file="Gui.cs" company="not applicable">
+//     Copyright (c) thaCURSEDpie. All rights reserved.
+// </copyright>
+//
+//-----------------------------------------------------------------------
+//          File:           Gui.cs
+//          Version:        Pre-Alpha
+//          Part of:        StructEdit mod
+//          Author:         thaCURSEDpie
+//          Date:           December 2011
+//          Description:
+//              This file contains the StructEditGuiForm class, which
+//              inherits from GTA.Forms.Form. This class provides the
+//              GUI functionality for the mod.
+//
+//              This file also contains the StructEditGuiScript class,
+//              which inherits from GTA.Script. This class is used to
+//              initiate and control the form (opening).
+//
+//=======================================================================
 
 namespace StructEdit.Source
 {
@@ -408,12 +429,10 @@ namespace StructEdit.Source
 
         public string[] currentStructParams;
 
-        private bool ctrlPressed;
         private string clipboard;
 
         public StructEditGuiScript()
         {
-            this.ctrlPressed = true;
             this.clipboard = string.Empty;
 
             this.width = GTA.Game.Resolution.Width;

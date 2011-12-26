@@ -1,4 +1,26 @@
-﻿
+﻿//=======================================================================
+//
+// <copyright file="SParameter.cs" company="not applicable">
+//     Copyright (c) thaCURSEDpie. All rights reserved.
+// </copyright>
+//
+//-----------------------------------------------------------------------
+//          File:           SParameter.cs
+//          Version:        Alpha
+//          Part of:        StructEdit mod
+//          Author:         thaCURSEDpie
+//          Date:           December 2011
+//          Description:
+//              This file contains the SParameter struct, which holds
+//              all the relevant data for a structure's parameter:
+//                  * Type
+//                  * MinVal (currently unused)
+//                  * MaxVal (currently unused)
+//                  * ParamName
+//                  * Offset
+//                  * StringSize
+//
+//=======================================================================
 
 namespace StructEdit.Source
 {
@@ -25,7 +47,7 @@ namespace StructEdit.Source
         /// <summary>
         /// The parameter's name.
         /// </summary>
-        public String ParamName;
+        public string ParamName;
 
         /// <summary>
         /// The maximum value the paramter should have. 0xCAFED00D represents no maximum value.
@@ -41,5 +63,5 @@ namespace StructEdit.Source
         /// The size of the string, if that is the type.
         /// </summary>
         public int StringSize;
-    };
+    }
 }

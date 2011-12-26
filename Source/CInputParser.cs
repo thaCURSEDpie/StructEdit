@@ -1,4 +1,20 @@
-﻿
+﻿//=======================================================================
+//
+// <copyright file="CInputParser.cs" company="not applicable">
+//     Copyright (c) thaCURSEDpie. All rights reserved.
+// </copyright>
+//
+//-----------------------------------------------------------------------
+//          File:           CInputParser.cs
+//          Version:        Beta
+//          Part of:        StructEdit mod
+//          Author:         thaCURSEDpie
+//          Date:           December 2011
+//          Description:
+//              This file contains the CInutParser file, which parses
+//              input files and creates CEditableStructs from them.
+//
+//=======================================================================
 
 namespace StructEdit.Source
 {
@@ -8,6 +24,9 @@ namespace StructEdit.Source
     using System.Linq;
     using System.Text;
 
+    /// <summary>
+    /// This class parses the input files (*.sif) and creates CEditableStructs from them.
+    /// </summary>
     public static class CInputParser
     {
         /// <summary>
@@ -18,23 +37,24 @@ namespace StructEdit.Source
         /// <returns>
         /// On success: true. On failure: false;
         /// </returns>
-        private static bool tryParseInteger(String line, ref int foundInt)
+        private static bool tryParseInteger(string line, ref int foundInt)
         {
             // Hex
             if (line.Contains("0x"))
             {
-                line = line.Replace("0x", "");
-                if (Int32.TryParse(line,
-                               System.Globalization.NumberStyles.AllowHexSpecifier,
-                               System.Globalization.CultureInfo.InvariantCulture,
-                               out foundInt))
+                line = line.Replace("0x", string.Empty);
+                if (int.TryParse(
+                                   line,
+                                   System.Globalization.NumberStyles.AllowHexSpecifier,
+                                   System.Globalization.CultureInfo.InvariantCulture,
+                                   out foundInt))
                 {
                     return true;
                 }
             }
             else
             {
-                if (Int32.TryParse(line, out foundInt))
+                if (int.TryParse(line, out foundInt))
                 {
                     return true;
                 }
@@ -43,7 +63,12 @@ namespace StructEdit.Source
             return false;
         }
 
-        private static bool ignoreLine(String line)
+        /// <summary>
+        /// Decides whether a line should be ignored or not.
+        /// </summary>
+        /// <param name="line">The line to be analyzed.</param>
+        /// <returns>A value indicating whether the line should be ignored or not.</returns>
+        private static bool ignoreLine(string line)
         {            
             if (line == null || line.Length == 0 || line[0] == '#' || line[0] == ' ' || line[0] == '\n' || line[0] == '\0')
             {
@@ -53,9 +78,27 @@ namespace StructEdit.Source
             return false;
         }
 
+        /// <summary>
+        /// Creates a new CEditableStruct from an input file.
+        /// </summary>
+        /// <param name="filePath">The file path to the input file.</param>
+        /// <param name="structure">The structure to create.</param>
+        /// <param name="errorLine">The error line. When an error has occured this value will be adjusted accordingly.</param>
+        /// <returns>0: success. 
+        /// 1: invalid number of elements in file header. 
+        /// 2: error parsing element 2 of file header (invalid integer). 
+        /// 3: error parsing element 3 of file header (invalid integer).
+        /// 4: error parsing element 4 of file header (invalid integer).
+        /// 5: invalid number of elements in parameter-describing line.
+        /// 6: error parsing element 1 of parameter-line (invalid integer).
+        /// 7: invalid parameter type
+        /// 8: invalid float value for parameter.
+        /// 9: invalid 4th element (invalid float)
+        /// 10: failed to open input file
+        /// 11: invalid parameter type 'char[]': invalid string length specified.</returns>
         public static int CreateStructure(string filePath, ref CEditableStruct structure, ref int errorLine)
         {
-            String structName = "";
+            string structName = string.Empty;
 
             int structSize = 0, structOffset = 0, numElements = 0;
             List<SParameter> parameters = new List<SParameter>();
@@ -71,7 +114,7 @@ namespace StructEdit.Source
                 return 10;
             }
 
-            String line = "";
+            string line = string.Empty;
 
             int numLines = 0;
             int numRealLines = 0;
@@ -162,12 +205,12 @@ namespace StructEdit.Source
                         if (elements[2].Contains("CHAR["))
                         {
                             // Cleanup
-                            elements[2] = elements[2].Replace("CHAR", "");
-                            elements[2] = elements[2].Replace("[", "");
-                            elements[2] = elements[2].Replace("]", "");
+                            elements[2] = elements[2].Replace("CHAR", string.Empty);
+                            elements[2] = elements[2].Replace("[", string.Empty);
+                            elements[2] = elements[2].Replace("]", string.Empty);
                             // Done
 
-                            if (!Int32.TryParse(elements[2], out tempParam.StringSize))
+                            if (!int.TryParse(elements[2], out tempParam.StringSize))
                             {
 
                                 // Error code 11: invalid parameter type 'CHAR[]': invalid string length specified.
@@ -175,23 +218,23 @@ namespace StructEdit.Source
                                 return 11;
                             }
 
-                            tempParam.Type = typeof(String);
+                            tempParam.Type = typeof(string);
                         }
                         else
                         {
                             switch (elements[2])
                             {
                                 case "INT":
-                                    tempParam.Type = typeof(Int32);
+                                    tempParam.Type = typeof(int);
                                     break;
                                 case "FLOAT":
                                     tempParam.Type = typeof(float);
                                     break;
                                 case "SHORT":
-                                    tempParam.Type = typeof(Int16);
+                                    tempParam.Type = typeof(short);
                                     break;
                                 case "LONG":
-                                    tempParam.Type = typeof(Int64);
+                                    tempParam.Type = typeof(long);
                                     break;
                                 case "DOUBLE":
                                     tempParam.Type = typeof(double);

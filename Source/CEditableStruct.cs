@@ -1,4 +1,21 @@
-﻿
+﻿//=======================================================================
+//
+// <copyright file="CEditableStruct.cs" company="not applicable">
+//     Copyright (c) thaCURSEDpie. All rights reserved.
+// </copyright>
+//
+//-----------------------------------------------------------------------
+//          File:           CEditableStruct.cs
+//          Version:        Alpha
+//          Part of:        StructEdit mod
+//          Author:         thaCURSEDpie
+//          Date:           December 2011
+//          Description:
+//              This file contains the CEditableStruct class,
+//              which provides the value editing / viewing functionality.
+//
+//=======================================================================
+
 namespace StructEdit.Source
 {
     using System;
@@ -11,7 +28,6 @@ namespace StructEdit.Source
     /// </summary>
     public unsafe class CEditableStruct
     {
-
         /// <summary>
         /// The base address of the application.
         /// </summary>
@@ -238,7 +254,6 @@ namespace StructEdit.Source
                 for (int i = 0; i < tempParam.StringSize; i++)
                 {
                     charArray[i] = *(byte*)paramAddress;
-                    // paramString += *(char*)paramAddress;
                 }
 
                 paramString = Encoding.ASCII.GetString(charArray);
@@ -318,7 +333,6 @@ namespace StructEdit.Source
                 for (int i = 0; i < tempParam.StringSize; i++)
                 {
                     charArray[i] = *(byte*)paramAddress;
-                    // paramString += *(char*)paramAddress;
                 }
 
                 paramString = Encoding.ASCII.GetString(charArray);
@@ -360,7 +374,7 @@ namespace StructEdit.Source
         /// <summary>
         /// Sets the param value.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The new value's type.</typeparam>
         /// <param name="index">The index.</param>
         /// <param name="paramName">Name of the param.</param>
         /// <param name="newVal">The new val.</param>
@@ -444,6 +458,14 @@ namespace StructEdit.Source
             return 0;
         }
 
+        /// <summary>
+        /// Changes a parameter's value by it's index.
+        /// </summary>
+        /// <typeparam name="T">The new value's type.</typeparam>
+        /// <param name="index">The element index.</param>
+        /// <param name="paramIndex">The parameter index.</param>
+        /// <param name="newVal">The new value.</param>
+        /// <returns>On success: 0. On invalid index number: -1. On unsupported parameter type: -2. On string length too long: -3. On invalid param index number: -4.</returns>
         public int SetParamValue<T>(int index, int paramIndex, T newVal)
         {
             if (index >= this._numElements || index < 0)

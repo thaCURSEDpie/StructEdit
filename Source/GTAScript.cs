@@ -49,22 +49,23 @@ namespace StructEdit.Source
             this.Tick += new EventHandler(this.GTAScript_Tick);
 
 
-            this.BindScriptCommand("si_setparamvalue", new ScriptCommandDelegate(setParamValue_scriptCmd));
-            this.BindScriptCommand("si_getparamvalue", new ScriptCommandDelegate(getParamValue_scriptCmd));
-            this.BindScriptCommand("si_getparamnum", new ScriptCommandDelegate(getParamNum_scriptCmd));
-            this.BindScriptCommand("si_getelementsnum", new ScriptCommandDelegate(getElementsNum_scriptCmd));
-            this.BindScriptCommand("si_getparamname", new ScriptCommandDelegate(getParamName_scriptCmd));
-            this.BindScriptCommand("si_getstructnum", new ScriptCommandDelegate(getStructNum_scriptCmd));
-            this.BindScriptCommand("si_getstructname", new ScriptCommandDelegate(getStructName_scriptCmd));
+            this.BindScriptCommand("si_setparamvalue", new ScriptCommandDelegate(this.setParamValue_scriptCmd));
+            this.BindScriptCommand("si_getparamvalue", new ScriptCommandDelegate(this.getParamValue_scriptCmd));
+            this.BindScriptCommand("si_getparamnum", new ScriptCommandDelegate(this.getParamNum_scriptCmd));
+            this.BindScriptCommand("si_getelementsnum", new ScriptCommandDelegate(this.getElementsNum_scriptCmd));
+            this.BindScriptCommand("si_getparamname", new ScriptCommandDelegate(this.getParamName_scriptCmd));
+            this.BindScriptCommand("si_getstructnum", new ScriptCommandDelegate(this.getStructNum_scriptCmd));
+            this.BindScriptCommand("si_getstructname", new ScriptCommandDelegate(this.getStructName_scriptCmd));
 
-            this.BindConsoleCommand("si_regen", new ConsoleCommandDelegate(regenStructures_console));
-            this.BindConsoleCommand("si_editparam", new ConsoleCommandDelegate(editStructureParam_console), " - Edits a structure's param value. usage: si_editparam <structure name> <element index> <param name> <new value>");
-            this.BindConsoleCommand("si_printparams", new ConsoleCommandDelegate(printStructureParams_console), " - Prints a structure's parameters. usage: si_printparams <structure name>");
-            this.BindConsoleCommand("si_printvalues", new ConsoleCommandDelegate(printStructureValues_console), " - Prints the parameter values for a certain element. usage: si_printvalues <structure name> <element index>");
+            this.BindConsoleCommand("si_regen", new ConsoleCommandDelegate(this.regenStructures_console));
+            this.BindConsoleCommand("si_editparam", new ConsoleCommandDelegate(this.editStructureParam_console), " - Edits a structure's param value. usage: si_editparam <structure name> <element index> <param name> <new value>");
+            this.BindConsoleCommand("si_printparams", new ConsoleCommandDelegate(this.printStructureParams_console), " - Prints a structure's parameters. usage: si_printparams <structure name>");
+            this.BindConsoleCommand("si_printvalues", new ConsoleCommandDelegate(this.printStructureValues_console), " - Prints the parameter values for a certain element. usage: si_printvalues <structure name> <element index>");
             this.Interval = 500;
 
         }
 
+        #region ScriptCmds
         private void getStructName_scriptCmd(GTA.Script sender, GTA.ObjectCollection parameters)
         {
             // si_getstructname <sender> <index>
@@ -101,7 +102,7 @@ namespace StructEdit.Source
                 return;
             }
 
-            String structName = parameters.Convert<string>(1);
+            string structName = parameters.Convert<string>(1);
 
             CEditableStruct tempStruct = GlobalVars.Structures.Find(x => x.Name == structName);
 
@@ -135,7 +136,7 @@ namespace StructEdit.Source
                 return;
             }
 
-            String structName = parameters.Convert<string>(1);
+            string structName = parameters.Convert<string>(1);
 
             CEditableStruct tempStruct = GlobalVars.Structures.Find(x => x.Name == structName);
 
@@ -159,7 +160,7 @@ namespace StructEdit.Source
                 return;
             }
 
-            String structName = parameters.Convert<string>(1);
+            string structName = parameters.Convert<string>(1);
             
             CEditableStruct tempStruct = GlobalVars.Structures.Find(x => x.Name == structName);
 
@@ -183,11 +184,11 @@ namespace StructEdit.Source
                 return;
             }
 
-            String structName = parameters.Convert<string>(1);
+            string structName = parameters.Convert<string>(1);
 
             int index = 0;
 
-            if (!Int32.TryParse(parameters.Convert<string>(2), out index))
+            if (!int.TryParse(parameters.Convert<string>(2), out index))
             {
                 // Error code 2: invalid index
                 SendScriptCommand(sender, "si_getparamvalue_response", parameters[0], 2);
@@ -275,11 +276,11 @@ namespace StructEdit.Source
                 return;
             }
 
-            String structName = parameters.Convert<string>(1);
+            string structName = parameters.Convert<string>(1);
 
             int index = 0;
 
-            if (!Int32.TryParse(parameters.Convert<string>(2), out index))
+            if (!int.TryParse(parameters.Convert<string>(2), out index))
             {
                 // Error code 2: invalid index
                 SendScriptCommand(sender, "si_setparamvalue_response", parameters[0], 2);
@@ -410,7 +411,13 @@ namespace StructEdit.Source
             // Success! :D
             SendScriptCommand(sender, "si_setparamvalue_respons", parameters[0], 0);
         }
+        #endregion
 
+
+        /// <summary>
+        /// Edits a structure's parameter value, using the console input.
+        /// </summary>
+        /// <param name="parameters">The console input..</param>
         private void editStructureParam_console(ParameterCollection parameters)
         {
             if (parameters.Count < 4)
@@ -419,11 +426,11 @@ namespace StructEdit.Source
                 return;
             }
 
-            String structName = parameters.ToString(0);
+            string structName = parameters.ToString(0);
 
             int index = 0;
 
-            if (!Int32.TryParse(parameters.ToString(1), out index))
+            if (!int.TryParse(parameters.ToString(1), out index))
             {
                 Game.Console.Print("Invalid index specified!");
                 return;
@@ -437,7 +444,7 @@ namespace StructEdit.Source
                 return;
             }
 
-            String paramName = parameters.ToString(2);
+            string paramName = parameters.ToString(2);
             SParameter tempParam = new SParameter();
 
             if (tempStruct.GetGenericParamByName(paramName, ref tempParam) != 0)
@@ -564,6 +571,10 @@ namespace StructEdit.Source
             }
         }
 
+        /// <summary>
+        /// Prints a structure´s parameters to the console.
+        /// </summary>
+        /// <param name="parameters">The console input.</param>
         private void printStructureParams_console(ParameterCollection parameters)
         {
             if (parameters.Count == 0)
@@ -572,7 +583,7 @@ namespace StructEdit.Source
                 return;
             }
 
-            String structName = parameters.ToString(0);
+            string structName = parameters.ToString(0);
 
             CEditableStruct tempStruct = GlobalVars.Structures.Find(x => x.Name == structName);
 
@@ -593,6 +604,10 @@ namespace StructEdit.Source
             }
         }
 
+        /// <summary>
+        /// Prints a structure´s parameter values to the console.
+        /// </summary>
+        /// <param name="parameters">The console input.</param>
         private void printStructureValues_console(ParameterCollection parameters)
         {
             if (parameters.Count < 2)
@@ -601,10 +616,10 @@ namespace StructEdit.Source
                 return;
             }
 
-            String structName = parameters.ToString(0);
+            string structName = parameters.ToString(0);
             int index = 0;
 
-            if (!Int32.TryParse(parameters.ToString(1), out index))
+            if (!int.TryParse(parameters.ToString(1), out index))
             {
                 Game.Console.Print("Invalid index specified!");
                 return;
@@ -675,19 +690,26 @@ namespace StructEdit.Source
             }
         }
 
+        /// <summary>
+        /// A console intermediate to regenerate the mod´s structures.
+        /// </summary>
+        /// <param name="parameters">None needed.</param>
         private void regenStructures_console(ParameterCollection parameters)
         {
             this.regenStructures();
         }
 
+        /// <summary>
+        /// Functions which initiates the regenerations of the mod´s structures: parsing of input files and creating of new CEditableStructs.
+        /// </summary>
         private void regenStructures()
         {
             GlobalVars.Structures.Clear();
 
-            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(GlobalParams.inputFilesDirectory);
-            System.IO.FileInfo[] fi = di.GetFiles("*" + GlobalParams.inputFilesExtension);
+            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(GlobalParams.InputFilesDirectory);
+            System.IO.FileInfo[] fi = di.GetFiles("*" + GlobalParams.InputFilesExtension);
 
-            CEditableStruct tempStructure = new CEditableStruct("", 0, 0, 0, 0, new List<SParameter>());
+            CEditableStruct tempStructure = new CEditableStruct(string.Empty, 0, 0, 0, 0, new List<SParameter>());
             int errorLine = 0;
             int retVal = 0;
 
