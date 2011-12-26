@@ -1,0 +1,59 @@
+# VALID example file for .SIF (Structure Information File) by thaCURSEDpie
+# 2011-12-23
+
+# Lines starting with a # are comments
+# Lines starting with a SPACE are also ignored
+
+# GTAIV.exe+0x8D12804 <- pointer to array start
+# GTAIV.exe+0x1140A20 <- begin array
+
+# Header: info about the structure
+# STRUCT_NAME STRUCT_SIZE ARRAY_OFFSET NUM_ELEMENTS
+CWeaponInfo 0x110 0x1140A20 60
+
+# Parameters
+# PARAM_NAME PARAM_OFFSET PARAM_TYPE PARAM_MINVAL PARAM_MAXVAL
+weapontype 0x0 INT NONE NONE
+slot 0x4 INT NONE NONE
+firetype 0x8 INT NONE NONE
+damagetype 0xC INT NONE NONE
+
+group 0x10 INT NONE NONE
+
+targetrange 0x14 FLOAT 0 NONE
+weaponrange 0x18 FLOAT 0 NONE
+
+stattype 0x1C INT NONE NONE
+
+weaponflags 0x20 INT 0 NONE
+weaponhash 0x24 INT 0 NONE
+
+aimaccuracy 0x34 FLOAT 0 NONE
+aimaccuracyfps 0x38 FLOAT 0 NONE
+
+offset_x 0x40 FLOAT NONE NONE
+offset_y 0x44 FLOAT NONE NONE
+offset_z 0x48 FLOAT NONE NONE
+
+crouchoffset_x 0x50 FLOAT NONE NONE
+crouchoffset_y 0x54 FLOAT NONE NONE
+crouchoffset_z 0x58 FLOAT NONE NONE
+
+reticule_standing 0x64 FLOAT NONE NONE
+reticule_ducked 0x68 FLOAT NONE NONE
+reticule_scale 0x6C FLOAT 0 NONE
+
+rumbleduration 0x70 INT 0 NONE
+rumbleintensity 0x74 FLOAT 0 NONE
+
+pickup_regentime 0x78 INT 0 NONE
+pickup_ammoonstreet 0x80 SHORT 0 NONE
+
+damage 0x82 SHORT 0 NONE
+damagefps 0x84 SHORT 0 NONE
+
+clipsize 0x86 SHORT 0 NONE
+ammomax 0x88 SHORT 0 NONE
+
+timebetweenshots 0x8C INT 0 NONE
+physicsforce 0x90 FLOAT 0 NONE

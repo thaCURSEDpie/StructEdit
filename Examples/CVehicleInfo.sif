@@ -1,0 +1,31 @@
+# VALID example file for .SIF (Structure Information File) by thaCURSEDpie
+# 2011-12-23
+
+# Lines starting with a # are comments
+# Lines starting with a SPACE are also ignored
+
+# Header: info about the structure
+# STRUCT_NAME STRUCT_SIZE ARRAY_OFFSET NUM_ELEMENTS
+CVehicleInfo 0x110 0x11E3BF0 115
+
+# Parameters
+# PARAM_NAME PARAM_OFFSET PARAM_TYPE PARAM_MINVAL PARAM_MAXVAL
+sIdentifier 0x0 CHAR[14] NONE NONE
+
+fMass 0x10 FLOAT 0 NONE
+
+centreOfMassX 0x20 FLOAT NONE NONE
+centreOfMassY 0x24 FLOAT NONE NONE
+centreOfMassZ 0x28 FLOAT NONE NONE
+
+nPercentageSubmerged 0x30 INT 0 100
+
+m_fDriveInertia 0x3C FLOAT NONE NONE
+
+m_nDriveGears 0x40 SHORT 1 NONE
+
+m_fDriveForce 0x44 FLOAT NONE NONE
+
+m_fBrakeForce 0x74 FLOAT NONE NONE
+m_fTractionCurveMax 0x8C FLOAT NONE NONE
+m_fTractionCurveMin 0x94 FLOAT NONE NONE
