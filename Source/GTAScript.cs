@@ -468,6 +468,21 @@ namespace StructEdit.Source
                     Game.Console.Print("Parameter changed");
                 }
             }
+            else if (tempParam.Type == typeof(uint))
+            {
+                uint newVal = uint.Parse(parameters.ToString(3));
+                int retVal = tempStruct.SetParamValue(index, paramName, newVal);
+
+                if (retVal == -1)
+                {
+                    Game.Console.Print("Invalid parameter index number");
+                    return;
+                }
+                else
+                {
+                    Game.Console.Print("Parameter changed");
+                }
+            }
             else if (tempParam.Type == typeof(string))
             {
                 string newVal = parameters.ToString(3);
@@ -642,6 +657,12 @@ namespace StructEdit.Source
                 if (tempParam.Type == typeof(float))
                 {
                     float value = 0f;
+                    tempStruct.GetParamValue(index, i, ref value);
+                    Game.Console.Print(tempParam.ParamName + " " + value.ToString());
+                }
+                else if (tempParam.Type == typeof(uint))
+                {
+                    uint value = 0;
                     tempStruct.GetParamValue(index, i, ref value);
                     Game.Console.Print(tempParam.ParamName + " " + value.ToString());
                 }

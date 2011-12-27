@@ -245,15 +245,19 @@ namespace StructEdit.Source
             {
                 paramValue = (T)(object)*(int*)(paramAddress);
             }
+            else if (typeof(T) == typeof(uint))
+            {
+                paramValue = (T)(object)*(uint*)(paramAddress);
+            }
             else if (typeof(T) == typeof(string))
             {
                 string paramString = string.Empty;
                 byte[] charArray = new byte[tempParam.StringSize];
-                
+
                 // We load in the characters one by one
                 for (int i = 0; i < tempParam.StringSize; i++)
                 {
-                    charArray[i] = *(byte*)paramAddress;
+                    charArray[i] = *(byte*)(paramAddress + i);
                 }
 
                 paramString = Encoding.ASCII.GetString(charArray);
@@ -324,6 +328,10 @@ namespace StructEdit.Source
             {
                 paramValue = (T)(object)*(int*)(paramAddress);
             }
+            else if (typeof(T) == typeof(uint))
+            {
+                paramValue = (T)(object)*(uint*)(paramAddress);
+            }
             else if (typeof(T) == typeof(string))
             {
                 string paramString = string.Empty;
@@ -332,7 +340,7 @@ namespace StructEdit.Source
                 // We load in the characters one by one
                 for (int i = 0; i < tempParam.StringSize; i++)
                 {
-                    charArray[i] = *(byte*)paramAddress;
+                    charArray[i] = *(byte*)(paramAddress + i);
                 }
 
                 paramString = Encoding.ASCII.GetString(charArray);
@@ -401,6 +409,11 @@ namespace StructEdit.Source
             {
                 int* tempPtr = (int*)paramAddress;
                 *tempPtr = (int)(object)newVal;
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                uint* tempPtr = (uint*)(paramAddress);
+                *tempPtr = (uint)(object)newVal;
             }
             else if (typeof(T) == typeof(string))
             {
@@ -490,6 +503,11 @@ namespace StructEdit.Source
             {
                 int* tempPtr = (int*)paramAddress;
                 *tempPtr = (int)(object)newVal;
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                uint* tempPtr = (uint*)(paramAddress);
+                *tempPtr = (uint)(object)newVal;
             }
             else if (typeof(T) == typeof(string))
             {

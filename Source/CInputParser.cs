@@ -227,6 +227,9 @@ namespace StructEdit.Source
                                 case "INT":
                                     tempParam.Type = typeof(int);
                                     break;
+                                case "UINT":
+                                    tempParam.Type = typeof(uint);
+                                    break;
                                 case "FLOAT":
                                     tempParam.Type = typeof(float);
                                     break;
