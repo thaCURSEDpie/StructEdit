@@ -30,55 +30,6 @@ namespace StructEdit.Source
     public static class CInputParser
     {
         /// <summary>
-        /// Parses an integer (can be hex or decimal) from a given string. Hexadecimal strings should begin with a '0x' prefix
-        /// </summary>
-        /// <param name="line">the string</param>
-        /// <param name="foundInt">The found int.</param>
-        /// <returns>
-        /// On success: true. On failure: false;
-        /// </returns>
-        private static bool tryParseInteger(string line, ref int foundInt)
-        {
-            // Hex
-            if (line.Contains("0x"))
-            {
-                line = line.Replace("0x", string.Empty);
-                if (int.TryParse(
-                                   line,
-                                   System.Globalization.NumberStyles.AllowHexSpecifier,
-                                   System.Globalization.CultureInfo.InvariantCulture,
-                                   out foundInt))
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if (int.TryParse(line, out foundInt))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Decides whether a line should be ignored or not.
-        /// </summary>
-        /// <param name="line">The line to be analyzed.</param>
-        /// <returns>A value indicating whether the line should be ignored or not.</returns>
-        private static bool ignoreLine(string line)
-        {            
-            if (line == null || line.Length == 0 || line[0] == '#' || line[0] == ' ' || line[0] == '\n' || line[0] == '\0')
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Creates a new CEditableStruct from an input file.
         /// </summary>
         /// <param name="filePath">The file path to the input file.</param>
@@ -127,7 +78,7 @@ namespace StructEdit.Source
                 line = sr.ReadLine();
                 numLines++;
 
-                if (!ignoreLine(line))
+                if (!IgnoreLine(line))
                 {
                     numRealLines++;
 
@@ -150,7 +101,7 @@ namespace StructEdit.Source
 
                         // If integer parsing failed...
 
-                        if (!tryParseInteger(elements[1], ref structSize))
+                        if (!TryParseInteger(elements[1], ref structSize))
                         {
                             errorLine = numLines;
                             // Error code 2: error parsing parameter 2 of file header (invalid integer).
@@ -158,7 +109,7 @@ namespace StructEdit.Source
                             return 2;
                         }
 
-                        if (!tryParseInteger(elements[2], ref structOffset))                            
+                        if (!TryParseInteger(elements[2], ref structOffset))
                         {
                             errorLine = numLines;
                             // Error code 3: error parsing parameter 3 of file header (invalid integer).
@@ -166,7 +117,7 @@ namespace StructEdit.Source
                             return 3;
                         }
 
-                        if (!tryParseInteger(elements[3], ref numElements))
+                        if (!TryParseInteger(elements[3], ref numElements))
                         {
                             errorLine = numLines;
                             // Error code 4: error parsing parameter 4 of file header (invalid integer).
@@ -193,7 +144,7 @@ namespace StructEdit.Source
 
                         tempParam.ParamName = elements[0];
 
-                        if (!tryParseInteger(elements[1], ref tempParam.Offset))
+                        if (!TryParseInteger(elements[1], ref tempParam.Offset))
                         {
                             errorLine = numLines;
 
@@ -297,6 +248,55 @@ namespace StructEdit.Source
             structure = new CEditableStruct(structName, GlobalVars.BaseAddress, structOffset, structSize, numElements, parameters);
             sr.Close();
             return 0;
+        }
+
+        /// <summary>
+        /// Parses an integer (can be hex or decimal) from a given string. Hexadecimal strings should begin with a '0x' prefix
+        /// </summary>
+        /// <param name="line">the string</param>
+        /// <param name="foundInt">The found int.</param>
+        /// <returns>
+        /// On success: true. On failure: false;
+        /// </returns>
+        private static bool TryParseInteger(string line, ref int foundInt)
+        {
+            // Hex
+            if (line.Contains("0x"))
+            {
+                line = line.Replace("0x", string.Empty);
+                if (int.TryParse(
+                                   line,
+                                   System.Globalization.NumberStyles.AllowHexSpecifier,
+                                   System.Globalization.CultureInfo.InvariantCulture,
+                                   out foundInt))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (int.TryParse(line, out foundInt))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Decides whether a line should be ignored or not.
+        /// </summary>
+        /// <param name="line">The line to be analyzed.</param>
+        /// <returns>A value indicating whether the line should be ignored or not.</returns>
+        private static bool IgnoreLine(string line)
+        {            
+            if (line == null || line.Length == 0 || line[0] == '#' || line[0] == ' ' || line[0] == '\n' || line[0] == '\0')
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

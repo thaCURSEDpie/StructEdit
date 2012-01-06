@@ -1,6 +1,9 @@
 # VALID example file for .SIF (Structure Information File) by thaCURSEDpie
 # 2011-12-23
 
+# Structure:    CVehicleInfo
+# Description:  info as listed in handling.dat
+
 # Lines starting with a # are comments
 # Lines starting with a SPACE are also ignored
 

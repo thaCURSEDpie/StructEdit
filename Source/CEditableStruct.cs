@@ -386,7 +386,7 @@ namespace StructEdit.Source
         /// <param name="index">The index.</param>
         /// <param name="paramName">Name of the param.</param>
         /// <param name="newVal">The new val.</param>
-        /// <returns>On success: 0. On invalid index number: -1. On unsupported param type: -2. On input string too long: -3.</returns>
+        /// <returns>On success: 0. On invalid index number: -1. On unsupported param type: -2. On input string too long: -3. On new value too large: -4. On new value too small: -5.</returns>
         public int SetParamValue<T>(int index, string paramName, T newVal)
         {
             if (index >= this._numElements || index < 0)
@@ -407,11 +407,21 @@ namespace StructEdit.Source
 
             if (typeof(T) == typeof(int))
             {
+                if ((int)(object)newVal > (int)tempParam.MaxVal || (int)(object)newVal < (int)tempParam.MinVal)
+                {
+                    return -4;
+                }
+
                 int* tempPtr = (int*)paramAddress;
                 *tempPtr = (int)(object)newVal;
             }
             else if (typeof(T) == typeof(uint))
             {
+                if ((uint)(object)newVal > (uint)tempParam.MaxVal || (uint)(object)newVal < (uint)tempParam.MinVal)
+                {
+                    return -4;
+                }
+
                 uint* tempPtr = (uint*)(paramAddress);
                 *tempPtr = (uint)(object)newVal;
             }
@@ -439,21 +449,41 @@ namespace StructEdit.Source
             }
             else if (typeof(T) == typeof(short))
             {
+                if ((short)(object)newVal > (short)tempParam.MaxVal || (short)(object)newVal < (short)tempParam.MinVal)
+                {
+                    return -4;
+                }
+
                 short* tempPtr = (short*)paramAddress;
                 *tempPtr = (short)(object)newVal;
             }
             else if (typeof(T) == typeof(float))
             {
+                if ((float)(object)newVal > tempParam.MaxVal || (float)(object)newVal < tempParam.MinVal)
+                {
+                    return -4;
+                }
+
                 float* tempPtr = (float*)paramAddress;
                 *tempPtr = (float)(object)newVal;
             }
             else if (typeof(T) == typeof(double))
             {
+                if ((double)(object)newVal > tempParam.MaxVal || (double)(object)newVal < tempParam.MinVal)
+                {
+                    return -4;
+                }
+
                 double* tempPtr = (double*)paramAddress;
                 *tempPtr = (double)(object)newVal;
             }
             else if (typeof(T) == typeof(long))
             {
+                if ((long)(object)newVal > tempParam.MaxVal || (long)(object)newVal < tempParam.MinVal)
+                {
+                    return -4;
+                }
+
                 long* tempPtr = (long*)paramAddress;
                 *tempPtr = (long)(object)newVal;
             }
@@ -478,7 +508,7 @@ namespace StructEdit.Source
         /// <param name="index">The element index.</param>
         /// <param name="paramIndex">The parameter index.</param>
         /// <param name="newVal">The new value.</param>
-        /// <returns>On success: 0. On invalid index number: -1. On unsupported parameter type: -2. On string length too long: -3. On invalid param index number: -4.</returns>
+        /// <returns>On success: 0. On invalid index number: -1. On unsupported parameter type: -2. On string length too long: -3. On invalid param index number: -4. On new value too large: -5. On new value too small: -6.</returns>
         public int SetParamValue<T>(int index, int paramIndex, T newVal)
         {
             if (index >= this._numElements || index < 0)
@@ -501,11 +531,21 @@ namespace StructEdit.Source
 
             if (typeof(T) == typeof(int))
             {
+                if ((int)(object)newVal > (int)tempParam.MaxVal || (int)(object)newVal < (int)tempParam.MinVal)
+                {
+                    return -4;
+                }
+
                 int* tempPtr = (int*)paramAddress;
                 *tempPtr = (int)(object)newVal;
             }
             else if (typeof(T) == typeof(uint))
             {
+                if ((uint)(object)newVal > (uint)tempParam.MaxVal || (uint)(object)newVal < (uint)tempParam.MinVal)
+                {
+                    return -4;
+                }
+
                 uint* tempPtr = (uint*)(paramAddress);
                 *tempPtr = (uint)(object)newVal;
             }
@@ -533,21 +573,41 @@ namespace StructEdit.Source
             }
             else if (typeof(T) == typeof(short))
             {
+                if ((short)(object)newVal > (short)tempParam.MaxVal || (short)(object)newVal < (short)tempParam.MinVal)
+                {
+                    return -4;
+                }
+
                 short* tempPtr = (short*)paramAddress;
                 *tempPtr = (short)(object)newVal;
             }
             else if (typeof(T) == typeof(float))
             {
+                if ((float)(object)newVal > tempParam.MaxVal || (float)(object)newVal < tempParam.MinVal)
+                {
+                    return -4;
+                }
+
                 float* tempPtr = (float*)paramAddress;
                 *tempPtr = (float)(object)newVal;
             }
             else if (typeof(T) == typeof(double))
             {
+                if ((double)(object)newVal > tempParam.MaxVal || (double)(object)newVal < tempParam.MinVal)
+                {
+                    return -4;
+                }
+
                 double* tempPtr = (double*)paramAddress;
                 *tempPtr = (double)(object)newVal;
             }
             else if (typeof(T) == typeof(long))
             {
+                if ((long)(object)newVal > tempParam.MaxVal || (long)(object)newVal < tempParam.MinVal)
+                {
+                    return -4;
+                }
+
                 long* tempPtr = (long*)paramAddress;
                 *tempPtr = (long)(object)newVal;
             }

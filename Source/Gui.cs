@@ -32,35 +32,117 @@ namespace StructEdit.Source
 
     public class StructEditGuiForm : GTA.Forms.Form
     {
+        /// <summary>
+        /// A listbox containing the value descriptions.
+        /// </summary>
+        GTA.Forms.Listbox listBox;
 
+        /// <summary>
+        /// A listbox containing the parameter values.
+        /// </summary>
+        GTA.Forms.Listbox listBox_values;
 
-        GTA.Forms.Listbox listBox,
-                          listBox_values;
+        /// <summary>
+        /// A button which browses to the next structure.
+        /// </summary>
+        GTA.Forms.Button nextStructBtn;
 
-        GTA.Forms.Button nextStructBtn,
-                         prevStructBtn,
-                         nextElementBtn,
-                         prevElementBtn,
-                         editValBtn,
-                         zapToElementBtn,
-                         zapToStructBtn;
+        /// <summary>
+        /// A button which browses to the previous structure.
+        /// </summary>
+        GTA.Forms.Button prevStructBtn;
 
-        GTA.Forms.Textbox newVal,
-                          zapElementTextbox,
-                          zapStructTextbox;
+        /// <summary>
+        /// A button which browses to the next element in the array.
+        /// </summary>
+        GTA.Forms.Button nextElementBtn;
 
-        GTA.Forms.Label structNameLbl,
-                        elementNumLbl;
+        /// <summary>
+        /// A button which browses to the previous element in the array.
+        /// </summary>
+        GTA.Forms.Button prevElementBtn;
 
-        int width, height;
-        int currentStructIndex,
-            currentElementIndex;
+        /// <summary>
+        /// A button which changes the selected parameter's value.
+        /// </summary>
+        GTA.Forms.Button editValBtn;
 
+        /// <summary>
+        /// A button which skips to the specified element.
+        /// </summary>
+        GTA.Forms.Button zapToElementBtn;
+
+        /// <summary>
+        /// A button which skips to the specified structure.
+        /// </summary>
+        GTA.Forms.Button zapToStructBtn;
+
+        /// <summary>
+        /// A textbox, in which the new value can be entered.
+        /// </summary>
+        GTA.Forms.Textbox newVal;
+
+        /// <summary>
+        /// A textbox, in which the desired element # can be entered.
+        /// </summary>
+        GTA.Forms.Textbox zapElementTextbox;
+
+        /// <summary>
+        /// A textbox, in which the desired structure # can be entered.
+        /// </summary>
+        GTA.Forms.Textbox zapStructTextbox;
+
+        /// <summary>
+        /// A label, holding the structure's name.
+        /// </summary>
+        GTA.Forms.Label structNameLbl;
+
+        /// <summary>
+        /// A label, holding the element's number.
+        /// </summary>
+        GTA.Forms.Label elementNumLbl;
+
+        /// <summary>
+        /// The form's width.
+        /// </summary>
+        int width;
+
+        /// <summary>
+        /// The form's height.
+        /// </summary>
+        int height;
+
+        /// <summary>
+        /// The index of the current structure.
+        /// </summary>
+        int currentStructIndex;
+
+        /// <summary>
+        /// The index of the current element.
+        /// </summary>
+        int currentElementIndex;
+
+        /// <summary>
+        /// The owning GTA.Script.
+        /// </summary>
         StructEditGuiScript owner;
 
+        /// <summary>
+        /// A bool representing whether ctrl is pressed or not.
+        /// </summary>
         private bool ctrlPressed;
+
+        /// <summary>
+        /// A string, which works as the clipboard (like the OS's clipboard).
+        /// </summary>
         private string clipboard;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StructEditGuiForm"/> class.
+        /// </summary>
+        /// <param name="owner">The owner.</param>
+        /// <param name="width">The form's width.</param>
+        /// <param name="height">The form's height.</param>
         public StructEditGuiForm(StructEditGuiScript owner, int width, int height)
         {
             this.owner = owner;
@@ -178,17 +260,30 @@ namespace StructEdit.Source
             this.Controls.Add(this.listBox_values);
         }
 
+        /// <summary>
+        /// Updates the labels.
+        /// </summary>
         private void updateLabels()
         {
             this.elementNumLbl.Text = "Current element: " + this.currentElementIndex.ToString() + "/" + (GlobalVars.Structures[this.currentStructIndex].NumElements - 1).ToString();
             this.structNameLbl.Text = "Current structure: " + GlobalVars.Structures[this.currentStructIndex].Name + " (" + this.currentStructIndex.ToString() + "/" + (GlobalVars.Structures.Count - 1 ).ToString() + ")";
         }
 
+        /// <summary>
+        /// Handles the GotFocus event of the newVal control. Empties the newVal textbox.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void newVal_GotFocus(object sender, EventArgs e)
         {
             this.newVal.Text = string.Empty;
         }
 
+        /// <summary>
+        /// Handles the Click event of the zapToElementBtn control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="GTA.MouseEventArgs"/> instance containing the event data.</param>
         void zapToElementBtn_Click(object sender, MouseEventArgs e)
         {
             int newIndex = 0;
@@ -203,6 +298,11 @@ namespace StructEdit.Source
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the zapToStructBtn control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="GTA.MouseEventArgs"/> instance containing the event data.</param>
         void zapToStructBtn_Click(object sender, MouseEventArgs e)
         {
             int newIndex = 0;
@@ -217,16 +317,31 @@ namespace StructEdit.Source
             }
         }
 
+        /// <summary>
+        /// Handles the GotFocus event of the zapStructTextbox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void zapStructTextbox_GotFocus(object sender, EventArgs e)
         {
             this.zapStructTextbox.Text = string.Empty;
         }
 
+        /// <summary>
+        /// Handles the GotFocus event of the zapElementTextbox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void zapElementTextbox_GotFocus(object sender, EventArgs e)
         {
             this.zapElementTextbox.Text = string.Empty;
         }
 
+        /// <summary>
+        /// Handles the KeyUp event of the StructEditGuiForm control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="GTA.KeyEventArgs"/> instance containing the event data.</param>
         void StructEditGuiForm_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == System.Windows.Forms.Keys.ControlKey ||
@@ -238,6 +353,11 @@ namespace StructEdit.Source
             }
         }
 
+        /// <summary>
+        /// Handles the KeyDown event of the StructEditGuiForm control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="GTA.KeyEventArgs"/> instance containing the event data.</param>
         void StructEditGuiForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == System.Windows.Forms.Keys.ControlKey ||
@@ -267,6 +387,9 @@ namespace StructEdit.Source
             }
         }
 
+        /// <summary>
+        /// Gets the newVal textbox.
+        /// </summary>
         public Textbox NewValTxtBox
         {
             get
@@ -275,6 +398,9 @@ namespace StructEdit.Source
             }
         }
 
+        /// <summary>
+        /// Gets the values listbox.
+        /// </summary>
         public Listbox ValuesListbox
         {
             get
@@ -283,6 +409,11 @@ namespace StructEdit.Source
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the editValBtn control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="GTA.MouseEventArgs"/> instance containing the event data.</param>
         void editValBtn_Click(object sender, MouseEventArgs e)
         {
             SParameter tempParam = new SParameter();
@@ -352,6 +483,11 @@ namespace StructEdit.Source
             this.listBox_values.SelectedIndex = selectedIndex;
         }
 
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the listBox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.listBox.SelectedIndex != this.listBox_values.SelectedIndex)
@@ -360,6 +496,11 @@ namespace StructEdit.Source
             }
         }
 
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the listBox_values control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void listBox_values_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.listBox.SelectedIndex != this.listBox_values.SelectedIndex)
@@ -368,6 +509,11 @@ namespace StructEdit.Source
             }
         }
 
+        /// <summary>
+        /// Gets a parameter's value.
+        /// </summary>
+        /// <param name="index">The parameter's index.</param>
+        /// <returns>A string representing the parameter's value.</returns>
         private string getParamValue(int index)
         {
             SParameter tempParam = new SParameter();
@@ -427,6 +573,11 @@ namespace StructEdit.Source
             return string.Empty;
         }
 
+        /// <summary>
+        /// Handles the Click event of the nextElementBtn control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="GTA.MouseEventArgs"/> instance containing the event data.</param>
         void nextElementBtn_Click(object sender, MouseEventArgs e)
         {
             this.currentElementIndex++;
@@ -440,6 +591,11 @@ namespace StructEdit.Source
             updateLabels();
         }
 
+        /// <summary>
+        /// Handles the Click event of the prevElementBtn control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="GTA.MouseEventArgs"/> instance containing the event data.</param>
         void prevElementBtn_Click(object sender, MouseEventArgs e)
         {
             this.currentElementIndex--;
@@ -453,6 +609,9 @@ namespace StructEdit.Source
             updateLabels();
         }
 
+        /// <summary>
+        /// Reloads the parameters and values.
+        /// </summary>
         private void reloadParams()
         {
             this.listBox.Items.Clear();
@@ -470,6 +629,11 @@ namespace StructEdit.Source
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the nextStructBtn control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="GTA.MouseEventArgs"/> instance containing the event data.</param>
         void nextStructBtn_Click(object sender, MouseEventArgs e)
         {
             this.currentStructIndex++;
@@ -484,6 +648,11 @@ namespace StructEdit.Source
             updateLabels();
         }
 
+        /// <summary>
+        /// Handles the Click event of the prevStructBtn control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="GTA.MouseEventArgs"/> instance containing the event data.</param>
         void prevStructBtn_Click(object sender, MouseEventArgs e)
         {
             this.currentStructIndex--;
@@ -498,6 +667,11 @@ namespace StructEdit.Source
             updateLabels();
         }
 
+        /// <summary>
+        /// Handles the Opened event of the StructEditGuiForm control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void StructEditGuiForm_Opened(object sender, EventArgs e)
         {
             reloadParams();
@@ -509,20 +683,26 @@ namespace StructEdit.Source
 
     public class StructEditGuiScript : GTA.Script
     {
+        /// <summary>
+        /// The owned form.
+        /// </summary>
         StructEditGuiForm form;
 
-        int height, width;
+        /// <summary>
+        /// The form's height.
+        /// </summary>
+        int height;
 
-        public string currentStructName;
+        /// <summary>
+        /// The form's width.
+        /// </summary>
+        int width;
 
-        public string[] currentStructParams;
-
-        private string clipboard;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StructEditGuiScript"/> class.
+        /// </summary>
         public StructEditGuiScript()
         {
-            this.clipboard = string.Empty;
-
             this.width = GTA.Game.Resolution.Width;
             this.height = GTA.Game.Resolution.Height;
 
@@ -531,6 +711,10 @@ namespace StructEdit.Source
             this.form = new StructEditGuiForm(this, this.width, this.height);
         }
 
+        /// <summary>
+        /// Opens the form using the "si_gui" console command.
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
         private void openGui_console(ParameterCollection parameters)
         {
             Game.Console.Close();

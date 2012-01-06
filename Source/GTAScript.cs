@@ -63,6 +63,7 @@ namespace StructEdit.Source
             this.BindConsoleCommand("si_printvalues", new ConsoleCommandDelegate(this.printStructureValues_console), " - Prints the parameter values for a certain element. usage: si_printvalues <structure name> <element index>");
             this.Interval = 500;
 
+            this.regenStructures();
         }
 
         #region ScriptCmds

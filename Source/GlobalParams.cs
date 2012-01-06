@@ -31,11 +31,11 @@ namespace StructEdit.Source
         /// <summary>
         /// The directory input files should be stored.
         /// </summary>
-        public static String InputFilesDirectory = ".\\scripts\\structedit";
+        public static string InputFilesDirectory = ".\\scripts\\structedit";
 
         /// <summary>
         /// The input file extension.
         /// </summary>
-        public static String InputFilesExtension = ".sif";
+        public static string InputFilesExtension = ".sif";
     }
 }
