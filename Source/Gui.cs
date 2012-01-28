@@ -706,6 +706,7 @@ namespace StructEdit.Source
             this.width = GTA.Game.Resolution.Width;
             this.height = GTA.Game.Resolution.Height;
 
+            BindConsoleCommand("si-gui", new GTA.ConsoleCommandDelegate(openGui_console), "- opens the StructEdit GUI");
             BindConsoleCommand("si_gui", new GTA.ConsoleCommandDelegate(openGui_console), "- opens the StructEdit GUI");
 
             this.form = new StructEditGuiForm(this, this.width, this.height);

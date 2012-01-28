@@ -48,6 +48,13 @@ namespace StructEdit.Source
             this.KeyDown += new GTA.KeyEventHandler(this.GTAScript_KeyDown);
             this.Tick += new EventHandler(this.GTAScript_Tick);
 
+            this.BindScriptCommand("si-setparamvalue", new ScriptCommandDelegate(this.setParamValue_scriptCmd));
+            this.BindScriptCommand("si-getparamvalue", new ScriptCommandDelegate(this.getParamValue_scriptCmd));
+            this.BindScriptCommand("si-getparamnum", new ScriptCommandDelegate(this.getParamNum_scriptCmd));
+            this.BindScriptCommand("si-getelementsnum", new ScriptCommandDelegate(this.getElementsNum_scriptCmd));
+            this.BindScriptCommand("si-getparamname", new ScriptCommandDelegate(this.getParamName_scriptCmd));
+            this.BindScriptCommand("si-getstructnum", new ScriptCommandDelegate(this.getStructNum_scriptCmd));
+            this.BindScriptCommand("si-getstructname", new ScriptCommandDelegate(this.getStructName_scriptCmd));
 
             this.BindScriptCommand("si_setparamvalue", new ScriptCommandDelegate(this.setParamValue_scriptCmd));
             this.BindScriptCommand("si_getparamvalue", new ScriptCommandDelegate(this.getParamValue_scriptCmd));
@@ -57,7 +64,12 @@ namespace StructEdit.Source
             this.BindScriptCommand("si_getstructnum", new ScriptCommandDelegate(this.getStructNum_scriptCmd));
             this.BindScriptCommand("si_getstructname", new ScriptCommandDelegate(this.getStructName_scriptCmd));
 
-            this.BindConsoleCommand("si_regen", new ConsoleCommandDelegate(this.regenStructures_console));
+            this.BindConsoleCommand("si-regen", new ConsoleCommandDelegate(this.regenStructures_console), " - reloads the structure information data from the filesystem");
+            this.BindConsoleCommand("si_regen", new ConsoleCommandDelegate(this.regenStructures_console), " - reloads the structure information data from the filesystem");
+            this.BindConsoleCommand("si-editparam", new ConsoleCommandDelegate(this.editStructureParam_console), " - Edits a structure's param value. usage: si_editparam <structure name> <element index> <param name> <new value>");
+            this.BindConsoleCommand("si-printparams", new ConsoleCommandDelegate(this.printStructureParams_console), " - Prints a structure's parameters. usage: si_printparams <structure name>");
+            this.BindConsoleCommand("si-printvalues", new ConsoleCommandDelegate(this.printStructureValues_console), " - Prints the parameter values for a certain element. usage: si_printvalues <structure name> <element index>");
+            
             this.BindConsoleCommand("si_editparam", new ConsoleCommandDelegate(this.editStructureParam_console), " - Edits a structure's param value. usage: si_editparam <structure name> <element index> <param name> <new value>");
             this.BindConsoleCommand("si_printparams", new ConsoleCommandDelegate(this.printStructureParams_console), " - Prints a structure's parameters. usage: si_printparams <structure name>");
             this.BindConsoleCommand("si_printvalues", new ConsoleCommandDelegate(this.printStructureValues_console), " - Prints the parameter values for a certain element. usage: si_printvalues <structure name> <element index>");
